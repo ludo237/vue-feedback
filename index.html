@@ -8,15 +8,47 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <style>
+            body {
+                padding-top: 5rem;
+            }
+            .starter-template {
+                padding: 3rem 1.5rem;
+                text-align: center;
+            }
+        </style>
     </head>
 
     <body class="vh-100">
-        <h1>VueJS Feedback</h1>
-
         <div id="app">
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+                <a class="navbar-brand" href="#">Vue Feedback</a>
+
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="https://gitlab.com/ludo237/vue-feedback">Repository on Gitlab</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/ludo237/vue-feedback">Repository on Github</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="container">
+                <div class="starter-template">
+                    <h1>VueJs Feedback Component</h1>
+                    <p class="lead">A dead-simple component to accept feedback from your user or visitors. it depends on your API</p>
+                </div>
+            </main>
+
             <feedback></feedback>
         </div>
-
         <script src="dist/feedback.js" crossorigin="anonymous"></script>
     </body>
 
