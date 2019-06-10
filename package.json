@@ -1,0 +1,40 @@
+{
+  "name": "vue-feedback",
+  "description": "A dead-simple component to accept feedback from your user or visitors. it depends on your API",
+  "version": "0.0.1",
+  "author": "Claudio Ludovico Panetta <ludovico1990@hotmail.it>",
+  "private": false,
+  "license": "MIT",
+  "keywords": [
+    "feedback",
+    "vuejs",
+    "api"
+  ],
+  "main": "src/feedback.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --inline --hot",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/ludo237/vue-feedback.git"
+  },
+  "dependencies": {
+    "axios": "^0.19",
+    "vue": "^2.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26",
+    "babel-loader": "^8.0",
+    "cross-env": "^5.2",
+    "css-loader": "^2.1",
+    "file-loader": "^4.0",
+    "vue-loader": "^15.7",
+    "vue-template-compiler": "^2.6",
+    "webpack": "^4.33",
+    "webpack-dev-server": "^3.7"
+  },
+  "engines": {
+    "node": ">=6.9.0"
+  }
+}
