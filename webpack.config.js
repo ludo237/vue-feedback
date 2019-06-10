@@ -1,8 +1,6 @@
-import Path from 'path';
-import Webpack from 'webpack';
-
-let path = Path;
-let webpack = Webpack;
+let path = require('path');
+let webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     entry: './src/index.js',
@@ -31,6 +29,14 @@ module.exports = {
                 options: {
                     name: '[name].[ext]?[hash]'
                 }
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
@@ -43,7 +49,11 @@ module.exports = {
         historyApiFallback: true,
         noInfo: true
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    plugins: [
+        // make sure to include the plugin for the magic
+        new VueLoaderPlugin()
+    ]
 };
 
 if (process.env.NODE_ENV === 'production') {
