@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "axios": "^0.19",
+    "lodash": "^4.17.13",
     "vue": "^2.6"
   },
   "devDependencies": {
