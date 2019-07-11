@@ -1,58 +1,74 @@
 <template>
-    <div class="position-absolute w-15 feedback-container">
-        <a class="btn btn-lg btn-block btn-info feedback-btn" @click.prevent="toggle">
-            <span class="text-white">
-                <span>Give Your Feedback</span>
-            </span>
-        </a>
+  <div class="position-absolute w-15 feedback-container">
+    <a class="btn btn-lg btn-block btn-info feedback-btn" @click.prevent="toggle">
+      <span class="text-white">
+        <span>Give Your Feedback</span>
+      </span>
+    </a>
 
-        <transition enter-active-class="animated fadeIn" mode="out-in">
-            <div class="card rounded-0 border border-info" v-if="isOpen">
-                <div class="card-body">
-                    <form @submit.prevent="submit" method="post" role="form" v-if="isPending">
-                        <div>Score</div>
-                        <div class="form-group">
-                            <div class="custom-control custom-radio custom-control-inline" v-for="item in [1,2,3,4,5]" :key="item">
-                                <input type="radio" :id="'scoreValue' + item" v-model="score" :value="item"
-                                       class="custom-control-input" required>
-                                <label class="custom-control-label" :for="'scoreValue' + item">{{ item }}</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="thoughts">Thoughts</label>
-                            <textarea class="form-control no-resize" id="thoughts" rows="3" v-model="text"
-                                      placeholder="Share your opinion" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-block btn-success">Send</button>
-                    </form>
-                    <div class="d-flex justify-content-center" v-else-if="isSubmitted">
-                        <div class="spinner-border text-secondary" role="status">
-                            <span class="sr-only">Submitting...</span>
-                        </div>
-                    </div>
-                    <template v-else>
-                        <div class="alert" :class="alert.class" role="alert">{{ alert.message }}</div>
-                    </template>
-                </div>
+    <div class="card rounded-0 border border-bottom-0 border-info" v-if="isOpen">
+      <div class="card-body">
+        <form @submit.prevent="submit" method="post" role="form" v-if="isPending">
+          <div>Score</div>
+          <div class="form-group">
+            <div
+              class="custom-control custom-radio custom-control-inline"
+              v-for="item in [1,2,3,4,5]"
+              :key="item"
+            >
+              <input
+                type="radio"
+                :id="'scoreValue' + item"
+                v-model="score"
+                :value="item"
+                class="custom-control-input"
+                required
+              />
+              <label class="custom-control-label" :for="'scoreValue' + item">{{ item }}</label>
             </div>
-        </transition>
+          </div>
+          <div class="form-group">
+            <label for="thoughts">Thoughts</label>
+            <textarea
+              class="form-control no-resize"
+              id="thoughts"
+              rows="3"
+              v-model="text"
+              placeholder="Share your opinion"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-sm btn-block btn-success">Send</button>
+        </form>
+        <loader v-else-if="isSubmitted"></loader>
+        <alert v-else :alert="alert"></alert>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import FeedbackApi from "../api/feedback";
+/**
+ * This can be either Vuex of any kind of API you want
+ */
+import FeedbackApi from '../api/feedback';
 
 export default {
-  name: "feedback",
+  name: 'feedback',
+
+  components: {
+    Alert: () => import('./Alert.vue'),
+    Loader: () => import('./Loader.vue')
+  },
 
   data: () => ({
     isOpen: false,
-    status: "pending",
+    status: 'pending',
     score: 5,
-    text: "",
+    text: '',
     alert: {
-      class: "",
-      message: ""
+      variant: '',
+      message: ''
     }
   }),
 
@@ -63,41 +79,36 @@ export default {
       }
 
       this.isOpen = !this.isOpen;
-      this.status = "pending";
+      this.status = 'pending';
     },
 
     submit() {
-      this.status = "submitted";
+      this.status = 'submitted';
 
-      let payload = {
-        score: this.score,
-        text: this.text,
-        properties: {
-          url: window.location.href,
-          ua: navigator.userAgent,
-          platform: navigator.platform
-        }
-      };
-
-      FeedbackApi.store(payload)
+      FeedbackApi.store(this.buildPayload())
         .then(({ data }) => {
           this.alert = {
-            class: "alert-success",
-            message: data.message
+            variant: 'success',
+            message: 'Thanks for your feedback!'
           };
         })
         .catch(({ response }) => {
           this.alert = {
-            class: "alert-danger",
-            message: "Something Went Wrong"
+            variant: 'danger',
+            message: 'Something Went Wrong'
           };
-
-          console.log(response.data.message);
         })
         .finally(() => {
           // TODO: Add retry button
-          this.status = "done";
+          this.status = 'done';
         });
+    },
+
+    buildPayload() {
+      return {
+        score: this.score,
+        text: this.text
+      };
     }
   },
 
@@ -107,11 +118,11 @@ export default {
     },
 
     isPending() {
-      return this.status === "pending";
+      return this.status === 'pending';
     },
 
     isSubmitted() {
-      return this.status === "submitted";
+      return this.status === 'submitted';
     }
   }
 };
