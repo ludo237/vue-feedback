@@ -1,6 +1,6 @@
 <template>
-  <div class="alert" :class="variantClass" role="alert">
-    <slot name="message">{{ alert.message }}</slot>
+  <div class="border px-4 py-3 rounded relative" :class="variantClass" role="alert">
+    <span class="block sm:inline">{{ alert.message }}</span>
   </div>
 </template>
 
@@ -17,9 +17,8 @@ export default {
 
   computed: {
     variantClass() {
-      return `alert-${this.alert.variant}`;
+      return `bg-${this.alert.color}-100 border-${this.alert.color}-400 text-${this.alert.color}-700`;
     }
   }
 };
 </script>
-

@@ -1,48 +1,28 @@
 <template>
-  <div class="position-absolute w-15 feedback-container">
-    <a class="btn btn-lg btn-block btn-info feedback-btn" @click.prevent="toggle">
-      <span class="text-white">
-        <span>Give Your Feedback</span>
-      </span>
-    </a>
+  <div class="absolute w-64 feedback">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full flex justify-center" @click.prevent="toggle">
+      <span class="text-white">Give Your Feedback</span>
+      <chevron-up-icon size="1.5x" v-if="!isOpen"></chevron-up-icon>
+      <chevron-down-icon size="1.5x" v-else></chevron-down-icon>
+    </button>
 
-    <div class="card rounded-0 border border-bottom-0 border-info" v-if="isOpen">
-      <div class="card-body">
-        <form @submit.prevent="submit" method="post" role="form" v-if="isPending">
-          <div>Score</div>
-          <div class="form-group">
-            <div
-              class="custom-control custom-radio custom-control-inline"
-              v-for="item in [1,2,3,4,5]"
-              :key="item"
-            >
-              <input
-                type="radio"
-                :id="'scoreValue' + item"
-                v-model="score"
-                :value="item"
-                class="custom-control-input"
-                required
-              />
-              <label class="custom-control-label" :for="'scoreValue' + item">{{ item }}</label>
-            </div>
+    <div class="max-w-sm overflow-hidden shadow-lg p-4" v-if="isOpen">
+      <form @submit.prevent="submit" method="post" role="form" v-if="isPending">
+        <div class="block text-gray-700 text-sm font-bold mb-2">Score</div>
+        <div class="mb-4 flex">
+          <div class="flex px-2" v-for="item in [1,2,3,4,5]" :key="item">
+            <input :id="'scoreValue' + item" :value="item" type="radio" v-model="score" />
+            <label :for="'scoreValue' + item" class="flex items-center cursor-pointer">{{ item }}</label>
           </div>
-          <div class="form-group">
-            <label for="thoughts">Thoughts</label>
-            <textarea
-              class="form-control no-resize"
-              id="thoughts"
-              rows="3"
-              v-model="text"
-              placeholder="Share your opinion"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-sm btn-block btn-success">Send</button>
-        </form>
-        <loader v-else-if="isSubmitted"></loader>
-        <alert v-else :alert="alert"></alert>
-      </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="thoughts">Thoughts</label>
+          <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="thoughts" placeholder="Share your opinion" required></textarea>
+        </div>
+        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 w-full">Send</button>
+      </form>
+      <loader v-else-if="isSubmitted"></loader>
+      <alert v-else :alert="alert"></alert>
     </div>
   </div>
 </template>
@@ -58,6 +38,14 @@ export default {
 
   components: {
     Alert: () => import('./Alert.vue'),
+    ChevronDownIcon: () =>
+      import(/* webpackMode: "eager" */ 'vue-feather-icons').then(
+        ({ ChevronDownIcon }) => ChevronDownIcon
+      ),
+    ChevronUpIcon: () =>
+      import(/* webpackMode: "eager" */ 'vue-feather-icons').then(
+        ({ ChevronUpIcon }) => ChevronUpIcon
+      ),
     Loader: () => import('./Loader.vue')
   },
 
@@ -88,13 +76,13 @@ export default {
       FeedbackApi.store(this.buildPayload())
         .then(({ data }) => {
           this.alert = {
-            variant: 'success',
+            color: 'green',
             message: 'Thanks for your feedback!'
           };
         })
         .catch(({ response }) => {
           this.alert = {
-            variant: 'danger',
+            color: 'red',
             message: 'Something Went Wrong'
           };
         })
@@ -129,15 +117,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.feedback-container {
+.feedback {
   bottom: 0;
   right: 3em;
-}
-
-.feedback-btn {
-  border-radius: 0;
-  border-top-left-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
 }
 
 .custom-control-inline {
