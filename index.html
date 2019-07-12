@@ -1,61 +1,52 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
     <head>
-        <title>VueJs Feedback Tool | Ludo237</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <style>
-            body {
-                padding-top: 5rem;
-            }
-
-            .starter-template {
-                padding: 3rem 1.5rem;
-                text-align: center;
-            }
-
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Vue Feedback Component | Ludo237">
+        <title>Vue Feedback Component | Ludo237</title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="dist/css/index.css">
     </head>
 
-    <body class="vh-100">
+    <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-                <a class="navbar-brand" href="#">Vue Feedback</a>
+            <div class="header">
+                <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+                    <a class="pure-menu-heading" href="">Vue Feedback</a>
 
-                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://gitlab.com/ludo237/vue-feedback">Repository on Gitlab</a>
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item">
+                            <a href="/" class="pure-menu-link">Reload</a></li>
+                        <li class="pure-menu-item">
+                            <a href="https://gitlab.com/ludo237/vue-feedback" class="pure-menu-link"
+                                target="_blank">Gitlab
+                                Repository</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://github.com/ludo237/vue-feedback">Repository on Github</a>
+                        <li class="pure-menu-item">
+                            <a href="https://github.com/ludo237/vue-feedback" class="pure-menu-link"
+                                target="_blank">Github
+                                Repository</a>
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </div>
 
-            <main role="main" class="container">
-                <div class="starter-template">
-                    <h1 class="h1">VueJs Feedback Component</h1>
-                    <p class="lead">A dead-simple component to accept feedback from your user or visitors. it depends on
-                        your API</p>
-
-                    <ul class="list-unstyled">
-                        <li>Easy to use</li>
-                        <li>Plug & Play</li>
-                        <li>Backed by your APIs</li>
-                    </ul>
+            <div class="splash-container">
+                <div class="splash">
+                    <h1 class="splash-head">Vue Feedback Component</h1>
+                    <p class="splash-subhead">
+                        Plug & Play, easy to use Vue Component for user driven feedbacks on your site.
+                    </p>
                 </div>
-            </main>
+            </div>
 
             <feedback></feedback>
         </div>
-        <script src="dist/feedback.js" crossorigin="anonymous"></script>
+
+        <script src="dist/feedback.js" async defer crossorigin="anonymous"></script>
     </body>
 
 </html>
