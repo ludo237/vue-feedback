@@ -6,18 +6,18 @@
       <chevron-down-icon size="1.5x" v-else></chevron-down-icon>
     </button>
 
-    <div class="max-w-sm overflow-hidden shadow-lg p-4" v-if="isOpen">
+    <div class="max-w-sm overflow-hidden shadow-lg p-4 feedback__container" v-if="isOpen">
       <form @submit.prevent="submit" method="post" role="form" v-if="isPending">
         <div class="block text-gray-700 text-sm font-bold mb-2">Score</div>
         <div class="mb-4 flex">
-          <div class="flex px-2" v-for="item in [1,2,3,4,5]" :key="item">
-            <input :id="'scoreValue' + item" :value="item" type="radio" v-model="score" />
-            <label :for="'scoreValue' + item" class="flex items-center cursor-pointer">{{ item }}</label>
-          </div>
+          <p-radio class="p-icon p-round p-smooth" name="radio" color="info" v-for="item in [1,2,3,4,5]" :key="item" v-model="score" :value="item">
+            <check-circle-icon slot="extra" class="icon"></check-circle-icon>
+            {{ item }}
+          </p-radio>
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="thoughts">Thoughts</label>
-          <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="thoughts" placeholder="Share your opinion" required></textarea>
+          <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none" id="thoughts" placeholder="Share your opinion" required></textarea>
         </div>
         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 w-full">Send</button>
       </form>
@@ -46,7 +46,12 @@ export default {
       import(/* webpackMode: "eager" */ 'vue-feather-icons').then(
         ({ ChevronUpIcon }) => ChevronUpIcon
       ),
-    Loader: () => import('./Loader.vue')
+    CheckCircleIcon: () =>
+      import(/* webpackMode: "eager" */ 'vue-feather-icons').then(
+        ({ CheckCircleIcon }) => CheckCircleIcon
+      ),
+    Loader: () => import('./Loader.vue'),
+    PRadio: () => import(/* webpackMode: "eager"*/ 'pretty-checkbox-vue/radio')
   },
 
   data: () => ({
@@ -87,7 +92,6 @@ export default {
           };
         })
         .finally(() => {
-          // TODO: Add retry button
           this.status = 'done';
         });
     },
@@ -122,7 +126,11 @@ export default {
   right: 3em;
 }
 
-.custom-control-inline {
-  margin-right: 0.5rem !important;
+.feedback__container {
+  min-height: 100px;
+}
+
+textarea {
+  min-height: 130px;
 }
 </style>

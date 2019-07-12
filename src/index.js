@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Axios from 'axios';
-import './assets/tailwind.scss';
+import './assets/feedback.scss';
 
 window.Axios = Axios;
 window.Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
